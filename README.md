@@ -12,4 +12,10 @@ pip3 install -r requirements.txt
 pytest
 ```
 
+# Environment variable
+```BROWSER=chrome pytest```
+
+# Parallel run
+```BROWSER=chrome pytest -s -v -n=2```
+
 

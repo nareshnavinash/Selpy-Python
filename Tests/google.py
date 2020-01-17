@@ -1,5 +1,6 @@
 import pytest
 import allure
+import os
 from Library.driver import Driver
 from Pages.google import GooglePage
 
@@ -9,6 +10,7 @@ from Pages.google import GooglePage
 @allure.severity('Critical')
 def test_google_search():
     with allure.step("first step"):
+        print(os.environ['BROWSER'])
         d = Driver("chrome")
         d.get("https://www.google.com")
         print("landed in google home page")
