@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote import webelement
+from Library.store import Store
 
 class Driver:
 	driver = None
@@ -11,11 +14,12 @@ class Driver:
 			self.driver = webdriver.Firefox()
 		elif browser == "safari":
 			self.driver = webdriver.Safari()
-
-	def get_driver(self) -> WebDriver:
-		return self.driver
+		Store.push(self.driver)
 
 	def get(self, url: str) -> None:
 		self.driver.get(url)
+
+	def find_element(self, by, value) -> webelement.WebElement:
+		return self.driver.find_element(by, value)
 
 
