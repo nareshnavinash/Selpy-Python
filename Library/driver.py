@@ -2,9 +2,6 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote import webelement
 from Library.variable import Var
-import os
-import datetime
-
 from Library.store import Store
 
 
@@ -60,12 +57,6 @@ class Driver:
 
     def current_url(self) -> str:
         return self.driver.current_url
-
-    def save_screenshot(self) -> str:
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        config_path = os.path.join(root_dir, 'reports/screenshot/img%s.png' % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-        self.driver.save_screenshot(config_path)
-        return config_path
 
     def quit(self):
         self.driver.quit()

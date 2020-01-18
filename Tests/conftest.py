@@ -1,10 +1,24 @@
+import datetime
+import os
 import pytest
+import allure
+import glob
+from Library.store import Store
 
 
 @pytest.fixture(autouse=True)
 def before_each():
     print('*-* Before each INITIALIZATION')
-    yield
+    try:
+        yield
+        for driver in Store.drivers:
+            root_dir = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "")
+            config_path = root_dir + '/reports/screenshots/img%s.png' % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            driver.save_screenshot(config_path)
+            name = 'img%s.png' % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            allure.attach(config_path, name=name, attachment_type="PNG")
+    except Exception as e:
+        print(e)
     print('*-* After each END')
 
 
@@ -12,6 +26,8 @@ def before_each():
 def before_module():
     print('*-* Before module INITIALIZATION')
     yield
+    for driver in Store.drivers:
+        driver.quit()
     print('*-* After module END')
 
 
@@ -21,7 +37,12 @@ def pytest_configure(config):
     This hook is called for every plugin and initial conftest
     file after command line options have been parsed.
     """
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ pytest_configure")
+    print("*-* pytest_configure")
+    root_dir = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "")
+    config_path = root_dir + '/reports/screenshots/*.png'
+    for CleanUp in glob.glob(config_path):
+        print(CleanUp)
+        os.remove(CleanUp)
 
 
 def pytest_sessionstart(session):
@@ -29,7 +50,7 @@ def pytest_sessionstart(session):
     Called after the Session object has been created and
     before performing collection and entering the run test loop.
     """
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ pytest_sessionstart")
+    print("*-* pytest_sessionstart")
 
 
 def pytest_sessionfinish(session, exitstatus):
@@ -37,11 +58,11 @@ def pytest_sessionfinish(session, exitstatus):
     Called after whole test run finished, right before
     returning the exit status to the system.
     """
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ pytest_sessionfinish")
+    print("*-* pytest_sessionfinish")
 
 
 def pytest_unconfigure(config):
     """
     called before test process is exited.
     """
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ pytest_unconfigure")
+    print("*-* pytest_unconfigure")

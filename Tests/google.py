@@ -20,6 +20,5 @@ def test_google_search():
 
     with allure.step("second step"):
         GooglePage.enter_search_text(variable.loc("search_text"))
-        d.quit()
 
 
