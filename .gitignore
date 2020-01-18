@@ -1,4 +1,5 @@
 # Pycharm trash
+.coverage
 .idea
 __pycache__/
 
