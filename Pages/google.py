@@ -4,7 +4,7 @@ from Locators.google import GoogleLocator
 class GooglePage(GoogleLocator):
 
     def __init__(self):
-        super
+        super().__init__()
 
     @classmethod
     def enter_search_text(cls, string):
