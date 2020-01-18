@@ -13,10 +13,10 @@ def before_each():
         yield
         for driver in Store.drivers:
             root_dir = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "")
-            config_path = root_dir + '/reports/screenshots/img%s.png' % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-            driver.save_screenshot(config_path)
             name = 'img%s.png' % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-            allure.attach(config_path, name=name, attachment_type="PNG")
+            config_path = root_dir + '/reports/screenshots/' + name
+            driver.save_screenshot(config_path)
+            allure.attach.file(config_path, name=name, attachment_type=allure.attachment_type.PNG)
     except Exception as e:
         print(e)
     print('*-* After each END')

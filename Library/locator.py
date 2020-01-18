@@ -49,6 +49,15 @@ class Locator(Store):
         else:
             return txt_value
 
+    def get_attribute(self, name) -> str:
+        try:
+            att_value = Store.current_driver.find_element(self.by, self.value).get_attribute(name)
+        except Exception as e:
+            print("get attribute not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
+            return False
+        else:
+            return att_value
+
     def texts(self) -> list:
         try:
             arr_text = []
