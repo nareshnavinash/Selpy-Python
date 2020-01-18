@@ -1,0 +1,5 @@
+browser: chrome
+implicit_wait: 10
+browser_horizontal_size: 1200
+browser_vertical_size: 800
+headless: 0

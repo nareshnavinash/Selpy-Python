@@ -3,32 +3,23 @@ import allure
 import os
 from Library.driver import Driver
 from Pages.google import GooglePage
+from Library.variable import Var
 
 
 @allure.feature("Google Search")
 @allure.step('Enter and search')
 @allure.severity('Critical')
 def test_google_search():
+    with allure.step("Set the test data file needed for this test run"):
+        variable = Var("google.yml")
+
     with allure.step("first step"):
-        print(os.environ['BROWSER'])
-        d = Driver("chrome")
-        d.get("https://www.google.com")
+        d = Driver()
+        d.get(variable.loc("url"))
         print("landed in google home page")
 
     with allure.step("second step"):
-        GooglePage.enter_search_text("hello")
+        GooglePage.enter_search_text(variable.loc("search_text"))
         d.quit()
 
 
-@allure.feature("Google Search 2")
-@allure.step('Enter and search 2')
-@allure.severity('Critical')
-def test_google_search2():
-    with allure.step("first step 2"):
-        d = Driver("chrome")
-        d.get("https://www.google.com")
-        print("landed in google home page")
-
-    with allure.step("second step 2"):
-        GooglePage.enter_search_text("hello")
-        d.quit()

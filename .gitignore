@@ -11,9 +11,9 @@ __pycache__/
 # python identifiers
 .python-version
 
-# pytest report
+# pytest reports
 html_report.html
-report/
+
 
 # browser trash
 geckodriver.log

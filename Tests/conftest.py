@@ -2,10 +2,17 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def before_all():
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INITIALIZATION')
+def before_each():
+    print('*-* Before each INITIALIZATION')
     yield
-    print('######################################### END')
+    print('*-* After each END')
+
+
+@pytest.fixture(scope='module', autouse=True)
+def before_module():
+    print('*-* Before module INITIALIZATION')
+    yield
+    print('*-* After module END')
 
 
 def pytest_configure(config):
