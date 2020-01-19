@@ -1,6 +1,4 @@
-import pytest
 import allure
-import os
 from Library.driver import Driver
 from Pages.google import GooglePage
 from Library.variable import Var
@@ -20,7 +18,7 @@ def test_google_search():
         print("landed in google home page")
 
     with allure.step("second step"):
-        assert (GooglePage.is_search_box_displayed() == True)
+        assert (GooglePage.is_search_box_displayed() is True)
         GooglePage.enter_search_text(variable.local_value_for("search_text"))
         dynamic_data["search_text"] = GooglePage.get_search_text()
         dynamic_data["name"] = GooglePage.search_box.get_attribute("name")

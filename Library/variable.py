@@ -66,6 +66,7 @@ class Var:
         if self.env("snap") == "1":
             with open(self.file_path, 'w') as file:
                 documents = yaml.dump(params, file)
+                print(documents)
 
     def dynamic_value_for(self, string) -> str:
         try:

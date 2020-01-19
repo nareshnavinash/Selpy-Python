@@ -23,7 +23,8 @@ class Driver:
                 options.add_argument("--headless")
             self.driver = webdriver.Chrome(options=options)
             self.driver.implicitly_wait(int(Var.glob("implicit_wait")))
-            self.driver.set_window_size(int(Var.glob("browser_horizontal_size")), int(Var.glob("browser_vertical_size")))
+            self.driver.set_window_size(int(Var.glob("browser_horizontal_size")),
+                                        int(Var.glob("browser_vertical_size")))
         elif browser == "firefox":
             self.driver = webdriver.Firefox()
         elif browser == "safari":
@@ -60,4 +61,3 @@ class Driver:
 
     def quit(self):
         self.driver.quit()
-

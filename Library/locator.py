@@ -96,6 +96,7 @@ class Locator(Store):
         try:
             self.is_displayed_with_wait()
             var = Store.current_driver.find_element(self.by, self.value).click
+            print("Click action complete on:" + self.by + "with " + self.value + "return value: " + var)
         except Exception as e:
             print("click if displayed not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
             return False
@@ -119,7 +120,7 @@ class Locator(Store):
             scroll_locator = Store.current_driver.find_element(self.by, self.value)
             Store.current_driver.execute_script('arguments[0].scrollIntoView(true);', scroll_locator)
         except Exception as e:
-            print("scroll to locator using js not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
+            print("scroll to locator using js not worked at:" + self.by + ":" + self.value + " Exception: " + str(e))
             return False
         else:
             return True
@@ -139,11 +140,12 @@ class Locator(Store):
         try:
             return Store.current_driver.find_element(self.by, self.value)
         except Exception as e:
-            print("scroll to locator using js not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
+            print("get element not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
 
     def clear_and_send_keys(self, string) -> bool:
         try:
             var = Store.current_driver.find_element(self.by, self.value).clear
+            print("Clear action completed on: " + self.by + " and " + self.value + " Return value is: " + var)
             Store.current_driver.find_element(self.by, self.value).send_keys(string)
         except Exception as e:
             print("Clear and Send keys not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
