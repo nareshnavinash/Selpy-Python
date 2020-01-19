@@ -1,4 +1,6 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote import webelement
 from Library.variable import Var
@@ -21,12 +23,12 @@ class Driver:
             options.add_argument("--disable-extensions")
             if str(Var.glob("headless")) == "1" or str(Var.env("headless")) == "1":
                 options.add_argument("--headless")
-            self.driver = webdriver.Chrome(options=options)
+            self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
             self.driver.implicitly_wait(int(Var.glob("implicit_wait")))
             self.driver.set_window_size(int(Var.glob("browser_horizontal_size")),
                                         int(Var.glob("browser_vertical_size")))
         elif browser == "firefox":
-            self.driver = webdriver.Firefox()
+            self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
         elif browser == "safari":
             self.driver = webdriver.Safari()
         Store.push(self.driver)

@@ -10,3 +10,4 @@ allure-pytest==2.8.6
 ipdb == 0.12.3
 pyyaml == 5.3
 flake8 == 3.7.9
+webdriver-manager == 2.3.0
