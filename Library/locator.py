@@ -1,5 +1,6 @@
 from selenium.webdriver import ActionChains
 import selenium.webdriver.support.ui as ui
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.remote import webelement
 from Library.store import Store
 
@@ -22,7 +23,7 @@ class Locator(Store):
 
     def click(self) -> bool:
         try:
-            Store.current_driver.find_element(self.by, self.value).click
+            Store.current_driver.find_element(self.by, self.value).click()
         except Exception as e:
             print("click not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
             return False
@@ -48,6 +49,10 @@ class Locator(Store):
             return False
         else:
             return txt_value
+
+    def select(self, string):
+        select = Select(Store.current_driver.find_element(self.by, self.value))
+        select.select_by_visible_text(string)
 
     def get_attribute(self, name) -> str:
         try:
@@ -90,6 +95,14 @@ class Locator(Store):
             return wait.until(lambda element: Store.current_driver.find_element(self.by, self.value).is_displayed())
         except Exception as e:
             print("is_displayed_with_wait not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
+            return False
+
+    def wait_till_displayed(self, timeout=10) -> bool:
+        try:
+            wait = ui.WebDriverWait(Store.current_driver, timeout)
+            return wait.until(lambda element: Store.current_driver.find_element(self.by, self.value).is_displayed())
+        except Exception as e:
+            print("wait_till_displayed not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
             return False
 
     def click_if_displayed(self) -> bool:
@@ -144,7 +157,7 @@ class Locator(Store):
 
     def clear_and_send_keys(self, string) -> bool:
         try:
-            var = Store.current_driver.find_element(self.by, self.value).clear
+            var = Store.current_driver.find_element(self.by, self.value).clear()
             print("Clear action completed on: " + self.by + " and " + self.value + " Return value is: " + var)
             Store.current_driver.find_element(self.by, self.value).send_keys(string)
         except Exception as e:
@@ -152,3 +165,6 @@ class Locator(Store):
             return False
         else:
             return True
+
+    def get(self):
+        return "By: " + self.by + " Value: " + self.value

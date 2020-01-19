@@ -5,18 +5,18 @@ import allure
 
 class Var:
     file_name = None
-    local_variable = None
+    static_variable = None
     dynamic_variable = None
     file_path = None
 
     def __init__(self, file_name, type):
         self.file_name = file_name
-        if type == "local":
+        if type == "static":
             try:
                 root_dir = os.path.dirname(os.path.abspath(__file__)).replace("/Library", "")
                 self.file_path = root_dir + '/Data/TestData/' + file_name
                 with open(self.file_path) as file:
-                    self.local_variable = yaml.load(file, Loader=yaml.FullLoader)
+                    self.static_variable = yaml.load(file, Loader=yaml.FullLoader)
                 allure.attach.file(self.file_path, name=self.file_name, attachment_type=allure.attachment_type.TEXT)
             except Exception as e:
                 print(e)
@@ -55,9 +55,9 @@ class Var:
             print(e)
             return "None"
 
-    def local_value_for(self, string) -> str:
+    def static_value_for(self, string) -> str:
         try:
-            return self.local_variable[string]
+            return self.static_variable[string]
         except Exception as e:
             print(e)
             return ""
