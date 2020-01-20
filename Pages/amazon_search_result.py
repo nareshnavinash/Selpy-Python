@@ -17,8 +17,9 @@ class AmazonSearchResultPage(AmazonSearchResultLocator):
     @classmethod
     def is_filter_set_in_head_liner(cls, string):
         head_liner = AmazonSearchResultLocator.amazon_search_result_top_header.text()
-        result = head_liner.find(string)
-        if result == 0:
+        result = head_liner.find(str(string))
+        print("headliner : " + str(head_liner) + " expected string: " + str(string) + " result: " + str(result))
+        if result != -1:
             return True
         else:
             return False

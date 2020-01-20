@@ -72,7 +72,7 @@ class Driver:
         self.driver.switch_to.window(list_of_window_handles.pop())
 
     def window_handles_count(self):
-        return self.driver.window_handles
+        return len(self.driver.window_handles)
 
     def switch_to_parent_tab(self):
         self.driver.switch_to.window(self.current_window_handle)

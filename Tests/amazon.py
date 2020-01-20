@@ -1,5 +1,6 @@
 import allure
 import pytest
+import time
 from Library.driver import Driver
 from Pages.amazon_home_page import AmazonHomePage
 from Pages.amazon_search_result import AmazonSearchResultPage
@@ -41,6 +42,12 @@ def test_amazon_book_search_001():
     with allure.step("Apply the filter categories in the search results page"):
         AmazonSearchResultPage.select_department(static_variable.static_value_for("search_department"))
         AmazonSearchResultPage.select_sub_department(static_variable.static_value_for("search_sub_department"))
+        list_of_checkbox = static_variable.static_value_for("book_format")
+        size_of_list = len(list_of_checkbox)
+        for book_format in list_of_checkbox:
+            AmazonSearchResultPage.select_checkbox_filter(book_format)
+        assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
+            "Format: %s selected" % size_of_list)), "Applied checkbox filter is not listed in the result page headliner"
         AmazonSearchResultPage.select_average_customer_review(static_variable.static_value_for("avg_customer_review"))
         AmazonSearchResultPage.set_sort_by(static_variable.static_value_for("sort_by"))
         assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
@@ -52,8 +59,6 @@ def test_amazon_book_search_001():
         assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
             static_variable.static_value_for("avg_customer_review")) is True), "Avg customer review is not displayed " \
                                                                                "in result page head liner"
-        assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
-            static_variable.static_value_for("sort_by")) is True), "sort by is not displayed in result page head liner"
         AmazonSearchResultPage.set_min_max_price(static_variable.static_value_for("min_price"),
                                                  static_variable.static_value_for("max_price"))
         assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
@@ -63,33 +68,32 @@ def test_amazon_book_search_001():
             static_variable.static_value_for("max_price")) is True), "max_price is not displayed in result page head " \
                                                                      "liner "
 
-    with allure.step("Apply check box filters in the search result page"):
-        list_of_checkbox = static_variable.static_value_for("book_format")
-        size_of_list = len(list_of_checkbox)
-        for book_format in list_of_checkbox:
-            AmazonSearchResultPage.select_checkbox_filter(book_format)
-        assert (AmazonSearchResultPage.is_filter_set_in_head_liner(
-            "Format: %s selected" % size_of_list)), "Applied checkbox filter is not listed in the result page headliner"
-
     with allure.step("Select a product from the search result page"):
         AmazonSearchResultPage.select_a_product_from_search_result(static_variable.static_value_for("select_product"))
-        assert (driver.window_handles_count == 2), "New tab is not opened after clicking a product"
+        assert (driver.window_handles_count() == 2), "New tab is not opened after clicking a product"
         driver.switch_to_new_tab()
         assert (AmazonProductPage.is_product_page_displayed() is True), "Product page is not displayed after selecting"
 
     with allure.step("Set the delivery pincode in the product page"):
         AmazonProductPage.set_delivery_pincode(static_variable.static_value_for("delivery_pincode"))
-        result = AmazonProductPage.get_delivery_pincode().find(static_variable.static_value_for("delivery_pincode"))
-        assert (result is True), "Delivery Pin code is not set properly"
+        for i in range(0, 10):
+            time.sleep(1)
+            res = AmazonProductPage.get_delivery_pincode().find(
+                str(static_variable.static_value_for("delivery_pincode")))
+            if res != -1:
+                break
+        print("pincode: " + AmazonProductPage.get_delivery_pincode())
+        assert (res != -1), "Delivery Pin code is not set properly"
 
     with allure.step("Store the UI details in the dynamic dictionary"):
-        ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts()
-        ui_dynamic_data["amazon_product_byline_info"] = AmazonProductPage.amazon_product_byline_info.texts()
-        ui_dynamic_data["amazon_product_formats"] = AmazonProductPage.amazon_product_formats.texts()
-        ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage.amazon_product_detail_description.texts()
-        ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts()
-        ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts()
-        ui_dynamic_data["amazon_product_details"] = AmazonProductPage.amazon_product_details.texts()
+        ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts_as_string()
+        ui_dynamic_data["amazon_product_byline_info"] = AmazonProductPage.amazon_product_byline_info.texts_as_string()
+        ui_dynamic_data["amazon_product_formats"] = AmazonProductPage.amazon_product_formats.texts_as_string()
+        ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage.\
+            amazon_product_detail_description.texts_as_string()
+        ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
+        ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts_as_string()
+        ui_dynamic_data["amazon_product_details"] = AmazonProductPage.amazon_product_details.texts_as_string()
 
     with allure.step("Compare the dynamic value from UI with the stored file"):
         dynamic_variable.compare(ui_dynamic_data)

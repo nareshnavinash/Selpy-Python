@@ -9,7 +9,7 @@ book_format:
   - Paperback
   - Kindle eBooks
   - Hardcover
-min_price: 1000
-max_price: 1500
+min_price: 1,000
+max_price: 1,500
 select_product: 1
 delivery_pincode: 600001

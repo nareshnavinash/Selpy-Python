@@ -16,6 +16,7 @@ class AmazonProductPage(AmazonProductPageLocator):
         AmazonProductPageLocator.amazon_deliver_to_pincode.wait_till_displayed()
         AmazonProductPageLocator.amazon_deliver_to_pincode.send_keys(string)
         AmazonProductPageLocator.amazon_deliver_to_pincode_apply.click()
+        AmazonProductPageLocator.amazon_deliver_to_pincode_apply.click()
         return AmazonProductPageLocator.amazon_product_page_identifier.wait_till_displayed()
 
     @classmethod

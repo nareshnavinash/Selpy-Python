@@ -75,6 +75,18 @@ class Locator(Store):
         else:
             return arr_text
 
+    def texts_as_string(self) -> str:
+        try:
+            arr_text = []
+            elements = Store.current_driver.find_elements(self.by, self.value)
+            for ele in elements:
+                arr_text.append(ele.text)
+        except Exception as e:
+            print("get texts not worked at \n" + self.by + "\n" + self.value + "\n Exception: \n" + str(e))
+            return ""
+        else:
+            return ''.join(map(str, arr_text))
+
     def is_displayed(self) -> bool:
         try:
             return Store.current_driver.find_elements(self.by, self.value).is_displayed()

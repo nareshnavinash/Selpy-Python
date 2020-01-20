@@ -32,7 +32,7 @@ class AmazonSearchResultLocator:
 
     @classmethod
     def amazon_search_checkbox_filters(cls, string):
-        return Locator("css selector", "ul.a-unordered-list li[aria-label='%s']" % string)
+        return Locator("xpath", "//ul[contains(@class,'a-unordered-list')]//span[text()='%s']" % string)
 
     @classmethod
     def amazon_search_result_list_header(cls, number):

@@ -12,7 +12,6 @@ class AmazonHomePage(AmazonHomePageLocator):
 
     @classmethod
     def select_category_drop_down(cls, string):
-        AmazonHomePageLocator.amazon_search_categories.wait_till_displayed()
         AmazonHomePageLocator.amazon_search_categories.select(string)
 
     @classmethod
