@@ -29,7 +29,17 @@ class Driver:
             self.driver.set_window_size(int(Var.glob("browser_horizontal_size")),
                                         int(Var.glob("browser_vertical_size")))
         elif browser == "firefox":
+            # options = webdriver.FirefoxOptions()
+            # options.add_argument("--no-sandbox")
+            # options.add_argument("--foreground")
+            # options.add_argument('disable-infobars')
+            # options.add_argument("--disable-extensions")
+            # if str(Var.glob("headless")) == "1" or str(Var.env("headless")) == "1":
+            #     options.add_argument("--headless")
             self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+            # self.driver.implicitly_wait(int(Var.glob("implicit_wait")))
+            # self.driver.set_window_size(int(Var.glob("browser_horizontal_size")),
+            #                             int(Var.glob("browser_vertical_size")))
         elif browser == "safari":
             self.driver = webdriver.Safari()
         Store.push(self.driver)

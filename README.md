@@ -18,4 +18,8 @@ pytest
 # Parallel run
 ```BROWSER=chrome pytest -s -v -n=2```
 
+# snapshot run
+```snap=1 pytest```
+
+# 
 
