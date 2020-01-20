@@ -20,5 +20,6 @@ class AmazonHomePage(AmazonHomePageLocator):
         return AmazonHomePageLocator.amazon_search_categories_text.text()
 
     @classmethod
-    def search_in_the_search_box(cls,string):
+    def search_in_the_search_box(cls, string):
         AmazonHomePageLocator.amazon_search_textbox.send_keys(string)
+        AmazonHomePageLocator.amazon_search_button.click()

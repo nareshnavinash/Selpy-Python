@@ -1,3 +1,15 @@
 url: https://www.amazon.in/
 category: Books
 search_text: artificial intelligence
+search_department: Computing, Internet & Digital Media
+search_sub_department: Programming & Software Development
+avg_customer_review: 4 Stars & Up
+sort_by: Publication Date
+book_format:
+  - Paperback
+  - Kindle eBooks
+  - Hardcover
+min_price: 1000
+max_price: 1500
+select_product: 1
+delivery_pincode: 600001

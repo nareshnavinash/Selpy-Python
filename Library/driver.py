@@ -9,6 +9,7 @@ from Library.store import Store
 
 class Driver:
     driver = None
+    current_window_handle = None
 
     def __init__(self) -> None:
         if not Var.env("browser") == "None":
@@ -55,11 +56,26 @@ class Driver:
     def refresh(self) -> None:
         self.driver.refresh()
 
-    def execute_script(self, script, locator) -> None:
-        self.driver.execute_script(self, script, locator)
+    def execute_script(self, script, *args) -> None:
+        self.driver.execute_script(self, script, *args)
 
     def current_url(self) -> str:
         return self.driver.current_url
 
     def quit(self):
         self.driver.quit()
+
+    def switch_to_new_tab(self):
+        self.current_window_handle = self.driver.current_window_handle
+        list_of_window_handles = self.driver.window_handles
+        list_of_window_handles.remove(self.current_window_handle)
+        self.driver.switch_to.window(list_of_window_handles.pop())
+
+    def window_handles_count(self):
+        return self.driver.window_handles
+
+    def switch_to_parent_tab(self):
+        self.driver.switch_to.window(self.current_window_handle)
+
+    def close_current_tab(self):
+        self.driver.close()
