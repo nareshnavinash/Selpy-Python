@@ -92,9 +92,11 @@ def test_amazon_book_search_001():
         ui_dynamic_data["amazon_product_byline_info"] = AmazonProductPage.amazon_product_byline_info.texts_as_string()
         AmazonProductPage.amazon_product_formats.scroll_to_locator()
         ui_dynamic_data["amazon_product_formats"] = AmazonProductPage.amazon_product_formats.texts_as_string()
+        driver.switch_to_frame(AmazonProductPage.amazon_product_detail_description_iframe.get_element())
         AmazonProductPage.amazon_product_detail_description.scroll_to_locator()
         ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage.\
             amazon_product_detail_description.texts_as_string()
+        driver.switch_to_default_content()
         AmazonProductPage.amazon_product_offers.scroll_to_locator()
         ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
         AmazonProductPage.amazon_product_description.scroll_to_locator()

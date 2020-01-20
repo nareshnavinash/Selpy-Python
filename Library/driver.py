@@ -71,6 +71,12 @@ class Driver:
         list_of_window_handles.remove(self.current_window_handle)
         self.driver.switch_to.window(list_of_window_handles.pop())
 
+    def switch_to_frame(self, locator):
+        self.driver.switch_to.frame(locator)
+
+    def switch_to_default_content(self):
+        self.driver.switch_to.default_content()
+
     def window_handles_count(self):
         return len(self.driver.window_handles)
 

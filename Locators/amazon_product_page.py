@@ -10,6 +10,7 @@ class AmazonProductPageLocator:
     amazon_product_title = Locator("css selector", "span#productTitle")
     amazon_product_byline_info = Locator("css selector", "div#bylineInfo")
     amazon_product_formats = Locator("css selector", "div#formats")
+    amazon_product_detail_description_iframe = Locator("css selector", "iframe#bookDesc_iframe")
     amazon_product_detail_description = Locator("css selector", "div#iframeContent")
     amazon_product_offers = Locator("css selector", "div#sopp_feature_div")
     amazon_product_description = Locator("css selector", "div#productDescription_feature_div.a-row")
