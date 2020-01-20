@@ -29,8 +29,8 @@ def test_amazon_book_search_001():
 
     with allure.step("Select the categories as books in the search dropdown"):
         AmazonHomePage.select_category_drop_down(static_variable.static_value_for("category"))
-        assert (AmazonHomePage.get_selected_category() ==
-                static_variable.static_value_for("category")), "Category is not selected properly"
+        assert (AmazonHomePage.get_selected_category() == static_variable.static_value_for("category")),\
+            "Category is not selected properly"
 
     with allure.step("Search for the text which is needed in this"):
         search_text = static_variable.static_value_for("search_text")
@@ -86,13 +86,20 @@ def test_amazon_book_search_001():
         assert (res != -1), "Delivery Pin code is not set properly"
 
     with allure.step("Store the UI details in the dynamic dictionary"):
+        AmazonProductPage.amazon_product_title.scroll_to_locator()
         ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts_as_string()
+        AmazonProductPage.amazon_product_byline_info.scroll_to_locator()
         ui_dynamic_data["amazon_product_byline_info"] = AmazonProductPage.amazon_product_byline_info.texts_as_string()
+        AmazonProductPage.amazon_product_formats.scroll_to_locator()
         ui_dynamic_data["amazon_product_formats"] = AmazonProductPage.amazon_product_formats.texts_as_string()
+        AmazonProductPage.amazon_product_detail_description.scroll_to_locator()
         ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage.\
             amazon_product_detail_description.texts_as_string()
+        AmazonProductPage.amazon_product_offers.scroll_to_locator()
         ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
+        AmazonProductPage.amazon_product_description.scroll_to_locator()
         ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts_as_string()
+        AmazonProductPage.amazon_product_details.scroll_to_locator()
         ui_dynamic_data["amazon_product_details"] = AmazonProductPage.amazon_product_details.texts_as_string()
 
     with allure.step("Compare the dynamic value from UI with the stored file"):
