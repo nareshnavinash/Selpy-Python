@@ -1,4 +1,4 @@
-from Library.locator import Locator
+from selpy.locator import Locator
 
 
 class AmazonHomePageLocator:

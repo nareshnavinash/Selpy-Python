@@ -1,11 +1,11 @@
 import allure
 import pytest
 import time
-from Library.driver import Driver
+from selpy.driver import Driver
 from Pages.amazon_home_page import AmazonHomePage
 from Pages.amazon_search_result import AmazonSearchResultPage
 from Pages.amazon_product_page import AmazonProductPage
-from Library.variable import Var
+from selpy.variable import Var
 
 
 @allure.feature("Amazon - Book search with text 'AI', department as 'Arts, Film & Photography', sub-department as "

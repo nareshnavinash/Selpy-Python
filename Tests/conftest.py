@@ -3,7 +3,7 @@ import os
 import pytest
 import allure
 import glob
-from Library.store import Store
+from selpy.store import Store
 
 
 @pytest.fixture(autouse=True)
@@ -38,6 +38,10 @@ def pytest_configure(config):
     file after command line options have been parsed.
     """
     print("*-* pytest_configure")
+    Store.global_data_path = os.path.dirname(
+        os.path.abspath(__file__)).replace("/Tests", "") + '/Data/GlobalData/global_data.yml'
+    Store.static_data_path = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "") + '/Data/TestData/'
+    Store.dynamic_data_path = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "") + '/Data/DynamicData/'
     root_dir = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "")
     config_path = root_dir + '/reports/screenshots/*.png'
     for CleanUp in glob.glob(config_path):
