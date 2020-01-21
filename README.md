@@ -41,30 +41,41 @@ More details of this module can be refered in [selpy](https://pypi.org/project/s
 
 ## To Run the tests
 For a simple run of all the test files in normal mode, try
+
 ```shell script
 pytest
 ```
+
 To Run the tests in parallel mode or multi thread run for the available test files, try (To have parallel run you need to have atleast 2 tests inside your folder structure)
+
 ```shell script
 pytest -s -v -n=2
 ```
+
 To Run the tests in parallel mode for the available test files along with browser specification, try
+
 ```shell script
 browser=chrome pytest -s -v -n=2
 ```
+
 To Run the tests in parallel mode for the available test files in headless mode, try
+
 ```shell script
 headless=1 browser=chrome pytest -s -v -n=2
 ```
+
 This will run the tests in headless mode
 
 ## To open allure results
 Allure is a open source framework for reporting the test runs. To install allure in mac, use the following steps
+
 ```shell script
 brew cask install adoptopenjdk
 brew install allure
 ```
+
 To view the results for the test run, use
+
 ```shell script
 allure serve reports/allure
 ```
@@ -80,6 +91,7 @@ For better illustration on the testcases, allure reports has been integrated. Al
 
 ## Jenkins Integration with Docker images
 Get any of the linux with python docker image as the slaves in jenkins and use the same for executing the UI automation with this framework (Sample docker image - `https://hub.docker.com/_/python`). From the jenkins bash Execute the following to get the testcases to run,
+
 ```shell script
 #!/usr/bin/python3
 python --version
@@ -89,6 +101,7 @@ headless=1 pytest -s -v -n 4
 ```
 
 In Jenkins pipeline, try to add the following snippet to execute the tests,
+
 ```shell script
 pipeline {
     agent { docker { image 'python:3.7.6' } }
@@ -132,6 +145,7 @@ class AmazonHomePageLocator:
 ```
 
 4. To use the Locator method we need to pass the type of locator and the actual locator element. Type of locator has to be mentioned in the following way to allow `selpy` to process the locator.
+
 ```
 CSS - 'css selector'
 XPATH - 'xpath'
@@ -174,6 +188,7 @@ class AmazonHomePage(AmazonHomePageLocator):
 ### Creating a new test file in the project
 
 1. Define the tests inside the Tests folder. Create a new `.py` file and import the required modules inside (depending on the requirement). Mainly require the page modules inside the test file. It is not recommended to import locator modules since we can access the locators from the page module.
+
 ```python
 import allure
 import pytest
@@ -186,6 +201,7 @@ from selpy.variable import Var
 ```
 
 2. It is suggested to mention the allure feature name, severity, pytest's markers to the test. This allows us to have better reporting and dynamic way to run in the future.
+
 ```python
 @allure.feature("Feature name")
 @allure.severity('Critical')
@@ -198,12 +214,15 @@ def test_amazon_book_search_001():
         static_variable = Var("amazon.yml", "static")
         dynamic_variable = Var("amazon_book_search_result_dynamic.yml", "dynamic")
 ```
+
 To run the test with marker you can execute as
+
 ```shell script
 pytest -v -m regression 
 # or
 pytest -v -m ui
 ```
+
 Use `allure.step("step name")` to have a detailed reporting in allure.
 
 3. Append the method name for the test as `test_` only then it will be taken as a test case. This has been configured in ```pytest.ini``` as,
@@ -224,13 +243,14 @@ addopts = -rsxX
           --cov=Tests
           --alluredir reports/allure
           --clean-alluredir
-
 ```
+
 I have created markers to have distinguished marker for automation purpose. The `python_funtions` param is where we need to mention the test files. `addopts` param used to take the values that are used to give in command line along with pytest.
 
 Allure configurations and pytest's default report has been wired here.
 
 4. A file `conftest.py` should be created inside the Tests folder. In this file we can have the run before each, run before each module, run during and after pytest setup methods. Adding screenshot to the testcases is handled by,
+
 ```python
 @pytest.fixture(autouse=True)
 def before_each():
@@ -247,6 +267,7 @@ def before_each():
         print(e)
     print('*-* After each END')
 ```
+
 The fixture param `autouse=True` ensures that this block is invoked only once for each test method. 
 
 Closing of all the drivers has been handled like,
@@ -260,9 +281,11 @@ def before_module():
         driver.quit()
     print('*-* After module END')
 ```
+
 The param `scope='module'`ensures that this block is invoked only once for each test file.
 
 5. We used home grown pypi published module `selpy` for Page Object Model support as well as snap support. To use that module data files path has to be set, this is done by,
+
 ```python
 from selpy.store import Store
 def pytest_configure(config):
@@ -270,9 +293,11 @@ def pytest_configure(config):
     Store.static_data_path = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "") + '/Data/TestData/'
     Store.dynamic_data_path = os.path.dirname(os.path.abspath(__file__)).replace("/Tests", "") + '/Data/DynamicData/'
 ```
+
 This ensures that this data has been set before pytest is being invoked only once. More about `selpy` module can be seen at [pypi page](https://pypi.org/project/selpy/)
 
 6. Assert using pytest's default assertion method. Make sure you have a proper description to the assertion, so that once it is failed the failure message is proper.
+
 ```python
 assert (AmazonHomePage.is_home_page_displayed() is True), "Amazon home page is not displayed"
 ```
@@ -294,18 +319,24 @@ For example: If you are testing an application which tracks nasdaq or any other 
 To use the snap mode, you need to use `selpy` [selpy](https://pypi.org/project/selpy/) module, and make use of `Var` methods as follows.
 
 1. Declare the dictionary where the UI texts/data is to be stored during the test run.
+
 ```python
 ui_dynamic_data = {}
 ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts_as_string()
 ```
+
 2. Initiate a class variable with the file name against which you need to verify the UI data.
+
 ```python
 dynamic_variable = Var("amazon_book_search_result_dynamic.yml", "dynamic")
 ``` 
+
 3. To compare the UI data with the file use the `compare` method that comes along with the `dynamic_variable`
+
 ```python
 dynamic_variable.compare(ui_dynamic_data)
 ```
+
 This will compare and report it to allure and assertion has been done within that method.
 
 4. While running the suite for first time where no data is saved within the test file, run the suite with ```snap=1 pytest``` this will ensure the UI data is being saved to the file.
@@ -315,9 +346,11 @@ This will compare and report it to allure and assertion has been done within tha
 ## Static code analyser:
 
 For static code analyser I used flake8. To check the configurations view (.flake8)[.flake8] file. To check on the code status execte,
+
 ```shell script
 flake8
 ```
+
 currently there are `0` vulnerabilities with this project.
 
 
