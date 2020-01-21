@@ -73,7 +73,7 @@ further defined and clarified by project maintainers.
 ### Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting me at [mail][mailto:nareshnavinash@gmail.com]. All
+reported by contacting me at [mail](mailto:nareshnavinash@gmail.com). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project member has
 obligated to maintain confidentiality with regard to the reporter of an incident.
