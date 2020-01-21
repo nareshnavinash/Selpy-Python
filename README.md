@@ -287,6 +287,15 @@ This will compare and report it to allure and assertion has been done within tha
 
 5. Use only YML files for this purpose, since it is easier to handle key value pair with yaml file.
 
+## Static code analyser:
+
+For static code analyser I used flake8. To check the configurations view (.flake8)[.flake8] file. To check on the code status execte,
+```shell script
+flake8
+```
+currently there are `0` vulnerabilities with this project.
+
+
 ## Built With
 
 * [pytest](https://docs.pytest.org/en/latest/) - Core test framework
