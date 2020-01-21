@@ -4,6 +4,8 @@ Selpy-Python is a Page Object Model (POM) framework for selenium automation with
 
 This framework also uses [selpy](https://pypi.org/project/selpy/) custom built pypi module to implement snapshot feature (which is available in jest framework). If there are any change in UI we can directly change this in the test data file during the test run with ease. Manual maintenance of test data can be reduced drastically with this feature.
 
+More details of this module can be refered in [selpy](https://pypi.org/project/selpy/) or [repo](https://github.com/nareshnavinash/selpy)
+
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Made with Python](https://img.shields.io/badge/Made%20with-Python-yellow.svg)](https://www.python.org/)
@@ -129,7 +131,19 @@ class AmazonHomePageLocator:
         return Locator("xpath", "//select[contains(@class,'nav-search-dropdown')]//option[text()='%s']" % string)
 ```
 
-3. Ideally each web page should have a new file inside locators folder (with the same name as the web page) and all the locators inside a web page has to be declared inside a page class(Class name also should be same as the web page name).
+4. To use the Locator method we need to pass the type of locator and the actual locator element. Type of locator has to be mentioned in the following way to allow `selpy` to process the locator.
+```
+CSS - 'css selector'
+XPATH - 'xpath'
+ID - 'id'
+NAME - 'name'
+LINK TEXT - 'link text'
+PARTIAL LINK TEXT - 'partial link text'
+TAG NAME - 'tag name'
+CLASS NAME - 'class name'
+``` 
+
+5. Ideally each web page should have a new file inside locators folder (with the same name as the web page) and all the locators inside a web page has to be declared inside a page class(Class name also should be same as the web page name).
 * If the web page name is `home page` then the locator file name should be `home_page.rb` inside `locators` folder and the class name should be `HomePageLocator` inside `Locators` module.
 
 ### Adding page methods to the project
@@ -154,7 +168,7 @@ class AmazonHomePage(AmazonHomePageLocator):
         return AmazonHomePageLocator.amazon_logo.is_displayed_with_wait()
 ```
 
-3. Ideally each web page should have a new page file inside `pages` folder with the class name same as the web page name.
+4. Ideally each web page should have a new page file inside `pages` folder with the class name same as the web page name.
 * If the web page name is `home page` then the pages file name should be `home_page.rb` inside `pages` folder and the class name should be `HomePage` inside `Pages` module.
 
 ### Creating a new test file in the project
@@ -194,7 +208,7 @@ Use `allure.step("step name")` to have a detailed reporting in allure.
 
 3. Append the method name for the test as `test_` only then it will be taken as a test case. This has been configured in ```pytest.ini``` as,
 
-```python
+```ini
 markers =
     sanity: sanity tests marker
     regression: regression tests marker
@@ -262,6 +276,14 @@ This ensures that this data has been set before pytest is being invoked only onc
 ```python
 assert (AmazonHomePage.is_home_page_displayed() is True), "Amazon home page is not displayed"
 ```
+
+### Data sets:
+
+In order to have distinguished set of data I have used three types of data.
+
+**Global** - Global configuration for the whole project. Here mode of run, browsers to use, browser configurations etc., are specified.
+**Test Data** - This is to store the module level data. Ideally for each test file we need to have a test data file, but that depends on the requirement.
+**Dynamic Data** - This is to store the dynamic data. Files in this folder are supposed to change when we run with `snap=1 pytest`. This is separated from the other data files so that other static files are not disturbed during the run.
 
 ## Detailing snap Mode:
 

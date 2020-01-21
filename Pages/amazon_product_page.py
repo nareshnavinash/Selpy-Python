@@ -1,6 +1,7 @@
 from Locators.amazon_product_page import AmazonProductPageLocator
 
 
+# Inherit the locator class inside page class for easier access of locators
 class AmazonProductPage(AmazonProductPageLocator):
 
     def __init__(self):

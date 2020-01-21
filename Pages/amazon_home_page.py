@@ -1,6 +1,7 @@
 from Locators.amazon_home_page import AmazonHomePageLocator
 
 
+# Inherit the locator class inside page class for easier access of locators
 class AmazonHomePage(AmazonHomePageLocator):
 
     def __init__(self):

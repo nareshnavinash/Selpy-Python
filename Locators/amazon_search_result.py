@@ -2,6 +2,15 @@ from selpy.locator import Locator
 
 
 class AmazonSearchResultLocator:
+    # Use the following description for different locators
+    # CSS - 'css selector'
+    # XPATH - 'xpath'
+    # ID - 'id'
+    # NAME - 'name'
+    # LINK TEXT - 'link text'
+    # PARTIAL LINK TEXT - 'partial link text'
+    # TAG NAME - 'tag name'
+    # CLASS NAME - 'class name'
     amazon_search_result_top_header = Locator("css selector", "div.sg-col-inner div.a-section")
     amazon_search_result_department_see_more = Locator("css selector", "div#departments span.a-expander-prompt")
     amazon_search_sort_by = Locator("css selector", "span.a-dropdown-container")

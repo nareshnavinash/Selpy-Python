@@ -8,28 +8,30 @@ from Pages.amazon_product_page import AmazonProductPage
 from selpy.variable import Var
 
 
+# Feature name and severity to have better reporting in the allure.
 @allure.feature("Amazon - Book search with text 'AI', department as 'Arts, Film & Photography', sub-department as "
                 "'Cinema & Broadcast', maximum 'Avg Customer Review', sort result by 'Publication Date'"
                 "filter as 1000 to 1500 rupees, the book available in paperback, Kindle ebooks, and Hardcover"
                 "select the first result and verify")
 @allure.severity('Critical')
-@pytest.mark.regression
-@pytest.mark.ui
+@pytest.mark.regression  # Custom pytest marker to run the test cases with ease on demand
+@pytest.mark.ui  # Custom pytest marker to run the test cases with ease on demand
 def test_amazon_book_search_001():
     with allure.step("Initialize the UI dynamic data"):
         ui_dynamic_data = {}
     with allure.step("Set the test data file needed for this test run"):
-        static_variable = Var("amazon.yml", "static")
+        static_variable = Var("amazon.yml", "static")  # static variables will change for each test case/ test module
+        # Dynamic variable is to verify the dynamic data in UI, if needed we can store the UI values to this file
         dynamic_variable = Var("amazon_book_search_result_dynamic.yml", "dynamic")
 
     with allure.step("Initialize the driver and navigate to the url"):
-        driver = Driver()
+        driver = Driver() # Initialize the driver. Driver configurations will be taken from the global_data.yml file
         driver.get(static_variable.static_value_for("url"))
         assert (AmazonHomePage.is_home_page_displayed() is True), "Amazon home page is not displayed"
 
     with allure.step("Select the categories as books in the search dropdown"):
         AmazonHomePage.select_category_drop_down(static_variable.static_value_for("category"))
-        assert (AmazonHomePage.get_selected_category() == static_variable.static_value_for("category")),\
+        assert (AmazonHomePage.get_selected_category() == static_variable.static_value_for("category")), \
             "Category is not selected properly"
 
     with allure.step("Search for the text which is needed in this"):
@@ -40,6 +42,7 @@ def test_amazon_book_search_001():
                                                                                           "displayed in the result page"
 
     with allure.step("Apply the filter categories in the search results page"):
+        # applying and verifying the filters applied
         AmazonSearchResultPage.select_department(static_variable.static_value_for("search_department"))
         AmazonSearchResultPage.select_sub_department(static_variable.static_value_for("search_sub_department"))
         list_of_checkbox = static_variable.static_value_for("book_format")
@@ -76,6 +79,7 @@ def test_amazon_book_search_001():
 
     with allure.step("Set the delivery pincode in the product page"):
         AmazonProductPage.set_delivery_pincode(static_variable.static_value_for("delivery_pincode"))
+        # To handle the delay in the UI.
         for i in range(0, 10):
             time.sleep(1)
             res = AmazonProductPage.get_delivery_pincode().find(
@@ -86,22 +90,28 @@ def test_amazon_book_search_001():
         assert (res != -1), "Delivery Pin code is not set properly"
 
     with allure.step("Store the UI details in the dynamic dictionary"):
+        # Now fetch the data which you want to store in the snap way and save it in the ui_dynamic_data dictionary
+        # with the name to it. After saving this to the dictionary/hash, you can compare with the stored data.
         AmazonProductPage.amazon_product_title.scroll_to_locator()
         ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts_as_string()
         AmazonProductPage.amazon_product_byline_info.scroll_to_locator()
         ui_dynamic_data["amazon_product_byline_info"] = AmazonProductPage.amazon_product_byline_info.texts_as_string()
+        AmazonProductPage.amazon_product_show_more_format.click()
         AmazonProductPage.amazon_product_formats.scroll_to_locator()
         ui_dynamic_data["amazon_product_formats"] = AmazonProductPage.amazon_product_formats.texts_as_string()
         driver.switch_to_frame(AmazonProductPage.amazon_product_detail_description_iframe.get_element())
-        ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage.\
+        ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage. \
             amazon_product_detail_description.texts_as_string()
         driver.switch_to_default_content()
-        AmazonProductPage.amazon_product_offers.scroll_to_locator()
-        ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
         AmazonProductPage.amazon_product_description.scroll_to_locator()
         ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts_as_string()
+        # Intentionally adding following two details which are vulnerable to change dynamically.
+        # While running `snap=1 pytest` first time it will fail and next time it should pass
+        AmazonProductPage.amazon_product_offers.scroll_to_locator()
+        ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
         AmazonProductPage.amazon_product_details.scroll_to_locator()
         ui_dynamic_data["amazon_product_details"] = AmazonProductPage.amazon_product_details.texts_as_string()
 
     with allure.step("Compare the dynamic value from UI with the stored file"):
+        # Now compare the UI value with the stored value. This comparison is taken care in `selpy` module.
         dynamic_variable.compare(ui_dynamic_data)

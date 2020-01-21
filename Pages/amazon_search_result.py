@@ -1,6 +1,7 @@
 from Locators.amazon_search_result import AmazonSearchResultLocator
 
 
+# Inherit the locator class inside page class for easier access of locators
 class AmazonSearchResultPage(AmazonSearchResultLocator):
 
     def __init__(self):
