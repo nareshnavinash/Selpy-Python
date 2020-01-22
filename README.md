@@ -2,7 +2,7 @@
 
 Selpy-Python is a Page Object Model (POM) framework for selenium automation with python `pytest`. This framework uses 'pytest-xdist' module to run multiple threads to run the tests at the same time depending on the number of available processor cores (2X of number of available cores).
 
-This framework also uses [selpy](https://pypi.org/project/selpy/) custom built pypi module to implement snapshot feature (which is available in jest framework). If there are any change in UI we can directly change this in the test data file during the test run with ease. Manual maintenance of test data can be reduced drastically with this feature.
+This framework also uses _**[selpy](https://pypi.org/project/selpy/) custom built pypi module**_ to implement snapshot feature (which is available in jest framework). If there are any change in UI we can directly change this in the test data file during the test run with ease. Manual maintenance of test data can be reduced drastically with this feature.
 
 More details of this module can be refered in [selpy](https://pypi.org/project/selpy/) or [repo](https://github.com/nareshnavinash/selpy)
 
