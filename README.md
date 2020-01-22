@@ -35,9 +35,9 @@ More details of this module can be refered in [selpy](https://pypi.org/project/s
 * Clone this repository
 * Navigate to the cloned folder
 * To install the dependencies in MAC we use Homebrew version manager install (using)[https://brew.sh/]
-* Once brew is installed install python by ```brew install python3```
-* To get additional dependencies of python like pip3, do ```brew postinstall python3```
-* Install the required packages needed for this framework using ```pip3 install -r requirements.txt```
+* Once brew is installed install python by `brew install python3`
+* To get additional dependencies of python like pip3, do `brew postinstall python3`
+* Install the required packages needed for this framework using `pip3 install -r requirements.txt`
 
 ## To Run the tests
 For a simple run of all the test files in normal mode, try
@@ -45,6 +45,12 @@ For a simple run of all the test files in normal mode, try
 ```shell script
 pytest
 ```
+
+To run the tests in snap mode (to save the UI texts to the dynamic file)
+```shell script
+snap=1 pytest
+```
+Once the changes are saved to the file run the tests with `pytest` to get the test running against the saved data. To verify this feature I intentionally added two locator texts which will be changing continuously.
 
 To Run the tests in parallel mode or multi thread run for the available test files, try (To have parallel run you need to have atleast 2 tests inside your folder structure)
 
@@ -306,9 +312,9 @@ assert (AmazonHomePage.is_home_page_displayed() is True), "Amazon home page is n
 
 In order to have distinguished set of data I have used three types of data.
 
-**Global** - Global configuration for the whole project. Here mode of run, browsers to use, browser configurations etc., are specified.
-**Test Data** - This is to store the module level data. Ideally for each test file we need to have a test data file, but that depends on the requirement.
-**Dynamic Data** - This is to store the dynamic data. Files in this folder are supposed to change when we run with `snap=1 pytest`. This is separated from the other data files so that other static files are not disturbed during the run.
+* **Global** - Global configuration for the whole project. Here mode of run, browsers to use, browser configurations etc., are specified.
+* **Test Data** - This is to store the module level data. Ideally for each test file we need to have a test data file, but that depends on the requirement.
+* **Dynamic Data** - This is to store the dynamic data. Files in this folder are supposed to change when we run with `snap=1 pytest`. This is separated from the other data files so that other static files are not disturbed during the run.
 
 ## Detailing snap Mode:
 
@@ -339,7 +345,7 @@ dynamic_variable.compare(ui_dynamic_data)
 
 This will compare and report it to allure and assertion has been done within that method.
 
-4. While running the suite for first time where no data is saved within the test file, run the suite with ```snap=1 pytest``` this will ensure the UI data is being saved to the file.
+4. While running the suite for first time where no data is saved within the test file, run the suite with `snap=1 pytest` this will ensure the UI data is being saved to the file.
 
 5. Use only YML files for this purpose, since it is easier to handle key value pair with yaml file.
 
