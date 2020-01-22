@@ -11,4 +11,4 @@ ipdb == 0.12.3
 pyyaml == 5.3
 flake8 == 3.7.9
 webdriver-manager == 2.3.0
-selpy==0.0.8
+selpy==0.1.0

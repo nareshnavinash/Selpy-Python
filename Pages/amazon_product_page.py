@@ -13,6 +13,7 @@ class AmazonProductPage(AmazonProductPageLocator):
 
     @classmethod
     def set_delivery_pincode(cls, string):
+        AmazonProductPageLocator.amazon_deliver_to_link.wait_till_displayed()
         AmazonProductPageLocator.amazon_deliver_to_link.click()
         AmazonProductPageLocator.amazon_deliver_to_pincode.wait_till_displayed()
         AmazonProductPageLocator.amazon_deliver_to_pincode.send_keys(string)
@@ -22,4 +23,5 @@ class AmazonProductPage(AmazonProductPageLocator):
 
     @classmethod
     def get_delivery_pincode(cls):
+        AmazonProductPageLocator.amazon_deliver_to_link.wait_till_displayed()
         return AmazonProductPageLocator.amazon_deliver_to_link.text()

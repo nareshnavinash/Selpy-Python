@@ -25,18 +25,18 @@ def test_amazon_book_search_001():
         dynamic_variable = Var("amazon_book_search_result_dynamic.yml", "dynamic")
 
     with allure.step("Initialize the driver and navigate to the url"):
-        driver = Driver() # Initialize the driver. Driver configurations will be taken from the global_data.yml file
+        driver = Driver()  # Initialize the driver. Driver configurations will be taken from the global_data.yml file
         driver.get(static_variable.static_value_for("url"))
         assert (AmazonHomePage.is_home_page_displayed() is True), "Amazon home page is not displayed"
 
     with allure.step("Select the categories as books in the search dropdown"):
         AmazonHomePage.select_category_drop_down(static_variable.static_value_for("category"))
-        assert (AmazonHomePage.get_selected_category() == static_variable.static_value_for("category")), \
-            "Category is not selected properly"
 
     with allure.step("Search for the text which is needed in this"):
         search_text = static_variable.static_value_for("search_text")
         AmazonHomePage.search_in_the_search_box(search_text)
+        assert (AmazonHomePage.get_selected_category() == static_variable.static_value_for("category")), \
+            "Category is not selected properly"
         assert (AmazonSearchResultPage.is_search_result_page_displayed() is True), "Search result page is not displayed"
         assert (AmazonSearchResultPage.is_filter_set_in_head_liner(search_text) is True), "Searched text is not " \
                                                                                           "displayed in the result page"
@@ -75,6 +75,7 @@ def test_amazon_book_search_001():
         AmazonSearchResultPage.select_a_product_from_search_result(static_variable.static_value_for("select_product"))
         assert (driver.window_handles_count() == 2), "New tab is not opened after clicking a product"
         driver.switch_to_new_tab()
+        driver.wait_till_page_loads(30)
         assert (AmazonProductPage.is_product_page_displayed() is True), "Product page is not displayed after selecting"
 
     with allure.step("Set the delivery pincode in the product page"):

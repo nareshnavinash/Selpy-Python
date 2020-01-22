@@ -13,6 +13,8 @@ class AmazonHomePageLocator:
     # TAG NAME - 'tag name'
     # CLASS NAME - 'class name'
     amazon_logo = Locator("css selector", "div#nav-logo a[aria-label='Amazon']")
+    # In chrome amazon_search_categories works fine for select
+    # In firefox we have an open issue with the
     amazon_search_categories = Locator("css selector", "div.nav-search-scope select.nav-search-dropdown")
     amazon_search_categories_text = Locator("css selector", "div.nav-search-facade span")
     amazon_search_textbox = Locator("css selector", "div.nav-search-field input.nav-input")
