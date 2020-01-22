@@ -103,15 +103,21 @@ def test_amazon_book_search_001():
         ui_dynamic_data["amazon_product_detail_description"] = AmazonProductPage. \
             amazon_product_detail_description.texts_as_string()
         driver.switch_to_default_content()
+        # Intentionally adding following details which are vulnerable to change dynamically.
+        # While running `snap=1 pytest` first time it will fail and next time it should pass.
+        # Amazon.in has iframe components in it and few sensitive elements.
+        # To get the standard result kindly refrain from switching tabs or run with `headless=1 pytest` mode.
+        # This will ensure that that test browser is not interrupted in middle.
         AmazonProductPage.amazon_product_description.scroll_to_locator()
         ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts_as_string()
-        # Intentionally adding following two details which are vulnerable to change dynamically.
-        # While running `snap=1 pytest` first time it will fail and next time it should pass
         AmazonProductPage.amazon_product_offers.scroll_to_locator()
         ui_dynamic_data["amazon_product_offers"] = AmazonProductPage.amazon_product_offers.texts_as_string()
         AmazonProductPage.amazon_product_details.scroll_to_locator()
         ui_dynamic_data["amazon_product_details"] = AmazonProductPage.amazon_product_details.texts_as_string()
+        AmazonProductPage.amazon_product_description.scroll_to_locator()
+        ui_dynamic_data["amazon_product_description"] = AmazonProductPage.amazon_product_description.texts_as_string()
 
     with allure.step("Compare the dynamic value from UI with the stored file"):
         # Now compare the UI value with the stored value. This comparison is taken care in `selpy` module.
+        # assertion will be made in the selpy module itself and you could see those in the allure reports.
         dynamic_variable.compare(ui_dynamic_data)
