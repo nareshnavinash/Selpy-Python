@@ -16,6 +16,8 @@ class AmazonProductPageLocator:
     amazon_deliver_to_pincode_apply = Locator("css selector", "div.a-column input.a-button-input")
     amazon_product_page_identifier = Locator("css selector", "div#dp")
     # Product details locator
+    amazon_popup_close = Locator("css selector", "div.a-popover-wrapper span.a-button-inner input.a-button-input")
+    amazon_product_img = Locator("css selector", "div#leftCol img")
     amazon_product_title = Locator("css selector", "span#productTitle")
     amazon_product_byline_info = Locator("css selector", "div#bylineInfo")
     amazon_product_show_more_format = Locator("css selector", "span#showMoreFormatsPrompt")

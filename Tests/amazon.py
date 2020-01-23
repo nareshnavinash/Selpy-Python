@@ -93,6 +93,11 @@ def test_amazon_book_search_001():
     with allure.step("Store the UI details in the dynamic dictionary"):
         # Now fetch the data which you want to store in the snap way and save it in the ui_dynamic_data dictionary
         # with the name to it. After saving this to the dictionary/hash, you can compare with the stored data.
+        driver.wait_till_page_loads()
+        if AmazonProductPage.amazon_popup_close.wait_till_displayed(5) is True:
+            AmazonProductPage.amazon_popup_close.click()
+        AmazonProductPage.amazon_product_img.scroll_to_locator()
+        ui_dynamic_data["amazon_product_img"] = AmazonProductPage.amazon_product_img.get_attribute('src')
         AmazonProductPage.amazon_product_title.scroll_to_locator()
         ui_dynamic_data["amazon_product_title"] = AmazonProductPage.amazon_product_title.texts_as_string()
         AmazonProductPage.amazon_product_byline_info.scroll_to_locator()
