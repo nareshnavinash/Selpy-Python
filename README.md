@@ -30,6 +30,7 @@ More details of this module can be refered in [selpy](https://pypi.org/project/s
 * Multi Thread run
 * Snap
 * Static code analyser
+* Reports e-mailer using shovel
 
 ## Setup
 * Clone this repository
