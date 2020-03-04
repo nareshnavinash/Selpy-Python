@@ -59,7 +59,7 @@ def email(to_email="nareshnavinash@gmail.com", jenkins_url="Not set from cli", g
             final_string = final_string + "<li>" + cases + "</li>"
         broken_testcases_string = "Broken Test Cases, \n<ul>\n" + final_string + "\n</ul>"
     else:
-        broken_testcases_string = "Broken Test Cases, \n<ul>\nNone\n</ul>"
+        broken_testcases_string = ""
     for file in glob.glob("reports/*.html"):
         attachments.append(file)
     html_body = "" \
@@ -101,7 +101,7 @@ def email(to_email="nareshnavinash@gmail.com", jenkins_url="Not set from cli", g
                                    "</font>" \
                                    "<div style=\"height: 33px; line-height: 33px; font-size: 31px;\">&nbsp;</div>" \
                                    "<font face=\"'Source Sans Pro', sans-serif\" color=\"#585858\" style=\"font-size: 24px; line-height: 32px;\">" \
-                                      "<span style=\"font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 20px; line-height: 32px;\">GraphQL Automation Regression Status,</span>" \
+                                      "<span style=\"font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 20px; line-height: 32px;\">Automation Regression Status,</span>" \
                                    "</font>" \
                                    "<div style=\"height: 20px; line-height: 20px; font-size: 20px;\">&nbsp;</div>" \
                                    "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"88%\" style=\"width: 88% !important; min-width: 88%; max-width: 88%;\">" \
@@ -156,7 +156,7 @@ def email(to_email="nareshnavinash@gmail.com", jenkins_url="Not set from cli", g
                                    "</table>" \
                                    "<div style=\"height: 33px; line-height: 33px; font-size: 31px;\">&nbsp;</div>" \
                                    "<font face=\"'Source Sans Pro', sans-serif\" color=\"#585858\" style=\"font-size: 24px; line-height: 32px;\">" \
-                                      "<span style=\"font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;\">HTML Reports and Command line logs are attached for reference. Below are the few parameters that are responsible for this job trigger. If any failures or broken cases found in the result kindly trace back from the last commit ID with the last commited user.</span>" \
+                                      "<span style=\"font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;\">HTML Reports are attached for reference. Below are the few parameters that are responsible for this job trigger. If any failures or broken cases found in the result kindly trace back from the last commit ID with the last commited user.</span>" \
                                    "</font>" \
                                    "<div style=\"height: 20px; line-height: 20px; font-size: 31px;\">&nbsp;</div>" \
                                    "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"88%\" style=\"width: 88% !important; min-width: 88%; max-width: 88%;\">" \
