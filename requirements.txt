@@ -12,3 +12,5 @@ pyyaml == 5.3
 flake8 == 3.7.9
 webdriver-manager == 2.3.0
 selpy==0.1.1
+shovel==0.4.0
+gmail==0.6.3
